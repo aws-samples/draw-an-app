@@ -73,6 +73,7 @@ function ExportButton({ setHtml }: { setHtml: (html: string) => void }) {
             scale: 1,
           });
           const dataUrl = await blobToBase64(png!);
+          
           const resp = await fetch("/api/toHtml", {
             method: "POST",
             headers: {
@@ -82,13 +83,14 @@ function ExportButton({ setHtml }: { setHtml: (html: string) => void }) {
           });
 
           const json = await resp.json();
+          console.log(json)
 
           if (json.error) {
             alert("Error from open ai: " + JSON.stringify(json.error));
             return;
           }
 
-          const message = json.choices[0].message.content;
+          const message = json.html;
           const start = message.indexOf("<!DOCTYPE html>");
           const end = message.indexOf("</html>");
           const html = message.slice(start, end + "</html>".length);
