@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.423.0",
     "@tldraw/tldraw": "2.0.0-alpha.17",
-    "canvas-size": "^1.2.6",
+    "aws-sdk": "^2.1682.0",
+    "canvas-size": "^1.2.6",    
     "next": "^14.2.3",
     "openai": "^4.47.1",
     "prismjs": "^1.29.0",
