@@ -13,7 +13,7 @@
     "@tldraw/tldraw": "2.0.0-alpha.17",
     "aws-sdk": "^2.1682.0",
     "canvas-size": "^1.2.6",    
-    "next": "^14.2.3",
+    "next": "^14.2.10",
     "openai": "^4.47.1",
     "prismjs": "^1.29.0",
     "react": "^18.3.1",
