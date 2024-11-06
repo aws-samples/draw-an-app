@@ -7,7 +7,7 @@ import { getSvgAsImage } from "@/lib/getSvgAsImage";
 import { blobToBase64 } from "@/lib/blobToBase64";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { PreviewModal } from "@/components/PreviewModal";
+import { PreviewModal } from "@/components/PreviewModal"; 
 
 const Tldraw = dynamic(async () => (await import("@tldraw/tldraw")).Tldraw, {
   ssr: false,
@@ -54,62 +54,77 @@ export default function Home() {
 function ExportButton({ setHtml }: { setHtml: (html: string) => void }) {
   const editor = useEditor();
   const [loading, setLoading] = useState(false);
+  const [selectedModel, setSelectedModel] = useState<'claude' | 'llama'>('claude');
+
   // A tailwind styled button that is pinned to the bottom right of the screen
   return (
-    <button
-      onClick={async (e) => {
-        setLoading(true);
-        try {
-          e.preventDefault();
-          const svg = await editor.getSvg(
-            Array.from(editor.currentPageShapeIds)
-          );
-          if (!svg) {
-            return;
+    <div className="fixed bottom-4 right-4 flex items-center gap-2" style={{ zIndex: 1000 }}>
+      <select
+        value={selectedModel}
+        onChange={(e) => setSelectedModel(e.target.value as 'claude' | 'llama')}
+        className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+      >
+        <option value="claude">Claude</option>
+        <option value="llama">Llama</option>
+      </select>
+      <button
+        onClick={async (e) => {
+          setLoading(true);
+          try {
+            e.preventDefault();
+            const svg = await editor.getSvg(
+              Array.from(editor.currentPageShapeIds)
+            );
+            if (!svg) {
+              return;
+            }
+            const png = await getSvgAsImage(svg, {
+              type: "png",
+              quality: 1,
+              scale: 1,
+            });
+            const dataUrl = await blobToBase64(png!);
+            
+            const endpoint = selectedModel === 'claude' 
+              ? "/api/toHtml"
+              : "/api/toHtmlLlama";
+
+            const resp = await fetch(`http://ToHtml-ToHtm-Dy5moQUxlDfe-1441804803.us-west-2.elb.amazonaws.com${endpoint}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ image: dataUrl }),
+            });
+
+            const json = await resp.json();
+            console.log(json)
+
+            if (json.error) {
+              alert("Error from API: " + JSON.stringify(json.error));
+              return;
+            }
+
+            const message = json.html;
+            const start = message.indexOf("<!DOCTYPE html>");
+            const end = message.indexOf("</html>");
+            const html = message.slice(start, end + "</html>".length);
+            setHtml(html);
+          } finally {
+            setLoading(false);
           }
-          const png = await getSvgAsImage(svg, {
-            type: "png",
-            quality: 1,
-            scale: 1,
-          });
-          const dataUrl = await blobToBase64(png!);
-          
-          const resp = await fetch("/api/toHtml", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ image: dataUrl }),
-          });
-
-          const json = await resp.json();
-          console.log(json)
-
-          if (json.error) {
-            alert("Error from open ai: " + JSON.stringify(json.error));
-            return;
-          }
-
-          const message = json.html;
-          const start = message.indexOf("<!DOCTYPE html>");
-          const end = message.indexOf("</html>");
-          const html = message.slice(start, end + "</html>".length);
-          setHtml(html);
-        } finally {
-          setLoading(false);
-        }
-      }}
-      className="fixed bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ="
-      style={{ zIndex: 1000 }}
-      disabled={loading}
-    >
-      {loading ? (
-        <div className="flex justify-center items-center ">
-          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-        </div>
-      ) : (
-        "Generate"
-      )}
-    </button>
+        }}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        disabled={loading}
+      >
+        {loading ? (
+          <div className="flex justify-center items-center ">
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+          </div>
+        ) : (
+          "Generate"
+        )}
+      </button>
+    </div>
   );
 }
