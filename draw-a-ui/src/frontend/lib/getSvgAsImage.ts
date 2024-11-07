@@ -13,23 +13,32 @@ export async function getSvgAsImage(
     type: TLCopyType | TLExportType;
     quality: number;
     scale: number;
+    desiredResolution?: { width: number; height: number };
   }
 ) {
-  const { type, quality, scale } = options;
+  const { type, quality, scale, desiredResolution } = options;
 
   const width = +svg.getAttribute("width")!;
   const height = +svg.getAttribute("height")!;
-  let scaledWidth = width * scale;
-  let scaledHeight = height * scale;
+  
+  let scaleFactor = scale;
+  if (desiredResolution) {
+    const widthScale = desiredResolution.width / width;
+    const heightScale = desiredResolution.height / height;
+    scaleFactor = Math.min(widthScale, heightScale);
+  }
+
+  let scaledWidth = width * scaleFactor;
+  let scaledHeight = height * scaleFactor;
 
   const dataUrl = await getSvgAsDataUrl(svg);
 
   const canvasSizes = await getBrowserCanvasMaxSize();
-  if (width > canvasSizes.maxWidth) {
+  if (scaledWidth > canvasSizes.maxWidth) {
     scaledWidth = canvasSizes.maxWidth;
     scaledHeight = (scaledWidth / width) * height;
   }
-  if (height > canvasSizes.maxHeight) {
+  if (scaledHeight > canvasSizes.maxHeight) {
     scaledHeight = canvasSizes.maxHeight;
     scaledWidth = (scaledHeight / height) * width;
   }

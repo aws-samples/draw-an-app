@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	output: "standalone",
-	 basePath: '/ui',
+	 //basePath: '/ui',
 }
 
 module.exports = nextConfig
