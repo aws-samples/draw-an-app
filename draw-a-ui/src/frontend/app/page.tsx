@@ -89,7 +89,8 @@ function ExportButton({ setHtml }: { setHtml: (html: string) => void }) {
               ? "/api/toHtml"
               : "/api/toHtmlLlama";
 
-            const resp = await fetch(`http://ToHtml-ToHtm-Dy5moQUxlDfe-1441804803.us-west-2.elb.amazonaws.com${endpoint}`, {
+            //await fetch("/api/toHtml"  
+            const resp = await fetch(`${endpoint}`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
