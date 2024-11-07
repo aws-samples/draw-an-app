@@ -1,4 +1,4 @@
-import { BedrockRuntimeClient, InvokeModelCommand, InvokeModelWithResponseStreamCommand, ConverseStreamCommand } from "@aws-sdk/client-bedrock-runtime"; // Import the AWS SDK for Bedrock
+import { BedrockRuntimeClient, InvokeModelCommand, InvokeModelWithResponseStreamCommand, ConverseStreamCommand, Message } from "@aws-sdk/client-bedrock-runtime"; // Import the AWS SDK for Bedrock
 
 import fs from 'fs';
 import path from 'path';
@@ -13,32 +13,21 @@ a single html file that uses tailwind to create the website. Use creative licens
 if you need to insert an image, use placehold.co to create a placeholder image. Respond only with the html file.`;
 
 
-async function sendImageToClaude(encodedImage: string) {
-  // Prepare the request payload
-  //const imageBytes = fs.readFileSync("./testImage.png");
-  //encodedImage = Buffer.from(imageBytes).toString('base64');
-
-
-
+async function sendImageToLlama(encodedImage: string) {
   try {
     
     
     const base64Data: string = encodedImage.split(",")[1];
-    console.log(base64Data)
-        // Decode the base64 string to a Buffer
     const byteData = Buffer.from(base64Data, 'base64');
-    console.log(byteData)
+
     // Set the model ID, e.g., Llama 3 8b Instruct.
     const modelId = "us.meta.llama3-2-90b-instruct-v1:0";
 
     // Start a conversation with the user message.    
-    const conversation = [
+    const conversation : Message[] = [
       {
                 "role": "user",
-                "content": [
-                    {                
-                        "text": systemPrompt
-                    },
+                "content": [                    
                     {
                         "image": {
                             "format": "png",
@@ -46,16 +35,18 @@ async function sendImageToClaude(encodedImage: string) {
                                 "bytes": byteData
                             }
                         }
-                    }
+                    },
+                    {                
+                        "text": systemPrompt
+                    },
                 ]
             }
     ];
 
-
-    // Create a command with the model ID, the message, and a basic configuration.
     const command = new ConverseStreamCommand({
       modelId,
       messages: conversation,
+      //system:  [{ text: systemPrompt }],
       inferenceConfig: { maxTokens: 4096, temperature: 0.5, topP: 0.9 },
     });
     
@@ -63,24 +54,11 @@ async function sendImageToClaude(encodedImage: string) {
 
     let completeMessage = "";
 
-    // Decode and process the response stream
-    // for await (const item of apiResponse.body!) {
-    //   /** @type Chunk */
-    //   const chunk = JSON.parse(new TextDecoder().decode(item.chunk!.bytes));
-    //   const chunk_type = chunk.type;
-
-    //   if (chunk_type === "content_block_delta") {
-    //     const text = chunk.delta.text;
-    //     completeMessage = completeMessage + text;
-    //     process.stdout.write(text);
-    //   }
-    // }
-
-    for await (const item of apiResponse.stream) {
+    for await (const item of apiResponse.stream!) {
       if (item.contentBlockDelta) {
         const text = item.contentBlockDelta.delta?.text
         completeMessage = completeMessage + text;
-        process.stdout.write(text);
+        process.stdout.write(text!);
       }
     }
 
@@ -98,7 +76,7 @@ export async function POST(request: Request) {
   const { image } = await request.json();
 
   // Make the API call to AWS Bedrock
-  const resp = await sendImageToClaude(image);
+  const resp = await sendImageToLlama(image);
 
   return new Response(JSON.stringify(resp), {
     headers: {

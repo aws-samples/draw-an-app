@@ -1,4 +1,4 @@
-import { BedrockRuntimeClient, InvokeModelCommand, InvokeModelWithResponseStreamCommand } from "@aws-sdk/client-bedrock-runtime"; // Import the AWS SDK for Bedrock
+import { BedrockRuntimeClient, InvokeModelCommand, InvokeModelWithResponseStreamCommand, ConverseStreamCommand } from "@aws-sdk/client-bedrock-runtime"; // Import the AWS SDK for Bedrock
 
 import fs from 'fs';
 import path from 'path';
@@ -14,6 +14,60 @@ if you need to insert an image, use placehold.co to create a placeholder image. 
 
 
 async function sendImageToClaude(encodedImage: string) {
+  try {
+    
+    const base64Data: string = encodedImage.split(",")[1];
+    const byteData = Buffer.from(base64Data, 'base64');
+  
+    const modelId = "anthropic.claude-3-5-sonnet-20240620-v1:0";
+
+    // Start a conversation with the user message.    
+    const conversation : Message[] = [
+      {
+                "role": "user",
+                "content": [                    
+                    {
+                        "image": {
+                            "format": "png",
+                            "source": {
+                                "bytes": byteData
+                            }
+                        }
+                    }
+                ]
+            }
+    ];
+
+
+    // Create a command with the model ID, the message, and a basic configuration.
+    const command = new ConverseStreamCommand({
+      modelId,
+      messages: conversation,
+      system:  [{ text: systemPrompt }],
+      inferenceConfig: { maxTokens: 4096, temperature: 0.5, topP: 0.9 },
+    });
+    
+    const apiResponse = await client.send(command);
+
+    let completeMessage = "";
+
+    for await (const item of apiResponse.stream!) {
+      if (item.contentBlockDelta) {
+        const text = item.contentBlockDelta.delta?.text
+        completeMessage = completeMessage + text;
+        process.stdout.write(text!);
+      }
+    }
+
+    return { "html" :  completeMessage}
+
+    } catch (error) {
+      console.error('Error invoking model:', error);
+    }
+  }
+
+
+async function sendImageToClaudeV1(encodedImage: string) {
   // Prepare the request payload
   //const imageBytes = fs.readFileSync("./testImage.png");
   //encodedImage = Buffer.from(imageBytes).toString('base64');

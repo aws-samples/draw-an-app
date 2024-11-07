@@ -58,11 +58,6 @@ export class ToHtmlStack extends cdk.Stack {
           listener: 'fg-alb-http',
           pathPattern: '/api/*',
           priority: 2,
-          // healthCheck: {
-          //   path: '/ui/',
-          //   interval: cdk.Duration.seconds(120),
-          //   timeout: cdk.Duration.seconds(30)
-          // }
         }
       ]
     });
@@ -74,14 +69,6 @@ export class ToHtmlStack extends cdk.Stack {
             interval: cdk.Duration.seconds(120),
             timeout: cdk.Duration.seconds(30)
         });
-
-     // fargateService.targetGroup.configureHealthCheck({
-     //        path: '/ui',
-     //        healthyThresholdCount: 2,
-     //        unhealthyThresholdCount: 5,
-     //        interval: cdk.Duration.seconds(120),
-     //        timeout: cdk.Duration.seconds(30)
-     //    });
 
 
     // Add Bedrock permissions to the task role

@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.423.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.682.0",
     "@tldraw/tldraw": "2.0.0-alpha.17",
     "aws-sdk": "^2.1682.0",
     "canvas-size": "^1.2.6",    
