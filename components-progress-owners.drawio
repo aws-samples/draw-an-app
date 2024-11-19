@@ -1,0 +1,84 @@
+<mxfile host="drawio.corp.amazon.com" modified="2024-11-19T07:14:03.535Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" etag="P_largrYMNS68pbf_1eN" version="21.7.4" type="device">
+  <diagram name="Page-1" id="d46uYLWLomVtQoS8eJte">
+    <mxGraphModel dx="2100" dy="1155" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="-YU-X2CwbC23snyHU5Ro-1" target="-YU-X2CwbC23snyHU5Ro-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-1" value="Grab image from USB camera" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="-184" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-2" value="&lt;ol&gt;&lt;li&gt;How to grab from external cam?&lt;/li&gt;&lt;li&gt;In what format will we get the image&lt;/li&gt;&lt;li&gt;Check progress with the capture button&lt;/li&gt;&lt;li&gt;How does the Iot button send us the event?&lt;/li&gt;&lt;li&gt;Decide on Bedrock/Llama models to use&lt;/li&gt;&lt;/ol&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-119" y="664" width="290" height="108" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="-YU-X2CwbC23snyHU5Ro-3" target="-YU-X2CwbC23snyHU5Ro-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-3" value="Image processing and realignment" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="29" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-5" value="PIL" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="154" y="279" width="36" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-6" value="Format ?" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-50" y="273" width="66" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="-YU-X2CwbC23snyHU5Ro-7" target="-YU-X2CwbC23snyHU5Ro-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-7" value="Listen for the IoT button press" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="-377" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-9" value="Key event ?" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-261" y="273" width="81" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="-YU-X2CwbC23snyHU5Ro-10" target="-YU-X2CwbC23snyHU5Ro-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-10" value="Blank NextJS app" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="29" y="374" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="-YU-X2CwbC23snyHU5Ro-11" target="-YU-X2CwbC23snyHU5Ro-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-11" value="Agent" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="248" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="-YU-X2CwbC23snyHU5Ro-14" target="-YU-X2CwbC23snyHU5Ro-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="-YU-X2CwbC23snyHU5Ro-14" target="-YU-X2CwbC23snyHU5Ro-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-421" y="178" />
+              <mxPoint x="-421" y="404" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-14" value="File read/write tool" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="29" y="148" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-16" value="Bedrock" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="478" y="260" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-18" value="Main ever-running coordinator script" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="-371" y="519" width="746" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-20" value="Suresh" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="277" y="334" width="56" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-21" value="Vikram" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-154" y="334" width="55" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-22" value="Vikram" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-15" y="582" width="55" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-23" value="Santhosh" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-359" y="336" width="69" height="26" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
