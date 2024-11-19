@@ -1,4 +1,4 @@
-<mxfile host="drawio.corp.amazon.com" modified="2024-11-19T07:14:03.535Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" etag="P_largrYMNS68pbf_1eN" version="21.7.4" type="device">
+<mxfile host="drawio.corp.amazon.com" modified="2024-11-19T07:29:24.670Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" etag="SC1FJmG4pEZGHpRvzCHz" version="21.7.4" type="device">
   <diagram name="Page-1" id="d46uYLWLomVtQoS8eJte">
     <mxGraphModel dx="2100" dy="1155" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -63,8 +63,8 @@
         <mxCell id="-YU-X2CwbC23snyHU5Ro-16" value="Bedrock" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="478" y="260" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="-YU-X2CwbC23snyHU5Ro-18" value="Main ever-running coordinator script" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="-371" y="519" width="746" height="60" as="geometry" />
+        <mxCell id="-YU-X2CwbC23snyHU5Ro-18" value="Main ever-running coordinator script&lt;br&gt;Reset the nextjs app -&amp;gt; Await key press -&amp;gt; Grab image from cam -&amp;gt; Run agent to update app -&amp;gt; Await keypress -&amp;gt;&amp;nbsp;Start over" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="-422" y="513" width="1010" height="60" as="geometry" />
         </mxCell>
         <mxCell id="-YU-X2CwbC23snyHU5Ro-20" value="Suresh" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="277" y="334" width="56" height="26" as="geometry" />
@@ -73,7 +73,7 @@
           <mxGeometry x="-154" y="334" width="55" height="26" as="geometry" />
         </mxCell>
         <mxCell id="-YU-X2CwbC23snyHU5Ro-22" value="Vikram" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="-15" y="582" width="55" height="26" as="geometry" />
+          <mxGeometry x="66" y="576" width="55" height="26" as="geometry" />
         </mxCell>
         <mxCell id="-YU-X2CwbC23snyHU5Ro-23" value="Santhosh" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="-359" y="336" width="69" height="26" as="geometry" />
