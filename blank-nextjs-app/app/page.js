@@ -13,9 +13,14 @@ export default function Home() {
                         height={400}
                         priority
                     />
-                    <p style={{ fontSize: '3rem', margin: '50px' }}>
-                        Draw an app
-                    </p>
+                    <div>
+                        <p style={{ fontSize: '3rem', marginLeft: '50px' }}>
+                            Draw an app
+                        </p>
+                        <p style={{ fontSize: '1rem', marginLeft: '50px', paddingBottom: '100px' }}>
+                            - Sketch to reality
+                        </p>
+                    </div>
                 </div>
             </main>
             <footer className={styles.footer}>
