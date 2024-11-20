@@ -7,7 +7,6 @@ import io
 import shutil
 from PIL import Image
 import numpy as np
-import cv2
 import traceback
 
 template_folder = 'nextjs-app-template'
@@ -181,8 +180,7 @@ while True:
     print(' ✅', flush=True)
 
     print('Ready ✅', flush=True)
-    # input()
-    key = cv2.waitKey(1) & 0xFF
+    input()
 
     os.system('clear')
     print('Resetting project ✅')
