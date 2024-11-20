@@ -7,6 +7,7 @@ import io
 import shutil
 from PIL import Image
 import numpy as np
+import cv2
 import traceback
 
 template_folder = 'nextjs-app-template'
@@ -175,33 +176,34 @@ bedrock_runtime, prompt = initialize()
 while True:
     os.system('clear')
     
-    print('Resetting project', end='')
+    print('Resetting project', end='', flush=True)
     reset_project()
-    print(' ✅')
+    print(' ✅', flush=True)
 
-    print('Ready ✅')
-    input()
+    print('Ready ✅', flush=True)
+    # input()
+    key = cv2.waitKey(1) & 0xFF
 
     os.system('clear')
     print('Resetting project ✅')
-    print('Ready ✅')
+    print('Ready ✅', flush=True)
 
-    print('Capturing image', end='')
+    print('Capturing board image', end='', flush=True)
     image = aquire_image()
-    print(' ✅')
+    print(' ✅', flush=True)
 
-    print('Processing image', end='')
+    print('Processing image', end='', flush=True)
     image = process_image(image)
-    print(' ✅')
+    print(' ✅', flush=True)
 
-    print('Calling multimodal LLM', end='')
+    print('Calling multimodal LLM', end='', flush=True)
     response = invoke_model(bedrock_runtime, prompt, image)
-    print(' ✅')
+    print(' ✅', flush=True)
 
-    print('Updating project', end='')
+    print('Updating project', end='', flush=True)
     update_project(response)
-    print(' ✅')
+    print(' ✅', flush=True)
 
-    print('Done 🎉')
+    print('Done 🎉', flush=True)
     break
 

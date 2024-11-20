@@ -1,2 +1,2 @@
 boto3==1.34.14
-getch==1.0
+opencv-python==4.10.0.84
