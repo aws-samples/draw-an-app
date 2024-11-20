@@ -1,0 +1,295 @@
+You are an expert bootstrap and NextJS version 15 software developer. (Needs use client for client components.)
+You have access to a blank NextJS app with the following folder structure and code given inside <bash></bash> tags.
+You have to inspect the given image carefully and update the this NextJS application to implement the requirements specified in the image. 
+Use right styling to place the UI elements as given in the image and where is it not clear, place them with good design styling.
+For apps that need data storage and retrieval, add API paths and integrate it with the frontend as well.
+If you need to insert an image, use placehold.co to create a placeholder image.
+
+<bash>
+kvsuresh@80a99745e6b0 blank-nextjs-app % ls
+README.md               jsconfig.json           node_modules            package.json
+app                     next.config.mjs         package-lock.json       public
+kvsuresh@80a99745e6b0 blank-nextjs-app % cd app && ls
+favicon.ico     fonts           globals.css     layout.js       page.js         page.module.css
+kvsuresh@80a99745e6b0 app % cat globals.css 
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+kvsuresh@80a99745e6b0 app % cat layout.js 
+import localFont from "next/font/local";
+import "./globals.css";
+
+const geistSans = localFont({
+    src: "./fonts/GeistVF.woff",
+    variable: "--font-geist-sans",
+    weight: "100 900",
+});
+const geistMono = localFont({
+    src: "./fonts/GeistMonoVF.woff",
+    variable: "--font-geist-mono",
+    weight: "100 900",
+});
+
+export const metadata = {
+    title: "Draw an app demo",
+    description: "Draw an app demo",
+};
+
+export default function RootLayout({ children }) {
+    return (
+        <html lang="en">
+            <body className={`${geistSans.variable} ${geistMono.variable}`}>
+                {children}
+            </body>
+        </html>
+    );
+}
+kvsuresh@80a99745e6b0 app % cat page.js 
+import Image from "next/image";
+import styles from "./page.module.css";
+
+export default function Home() {
+    return (
+        <div className={styles.page}>
+            <main className={styles.main}>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <Image
+                        src="/board.png"
+                        alt="board.png"
+                        width={250}
+                        height={400}
+                        priority
+                    />
+                    <div>
+                        <p style={{ fontSize: '3rem', marginLeft: '50px' }}>
+                            Draw an app
+                        </p>
+                        <p style={{ fontSize: '1rem', marginLeft: '50px', paddingBottom: '100px' }}>
+                            - Sketch to reality
+                        </p>
+                    </div>
+                </div>
+            </main>
+            <footer className={styles.footer}>
+
+            </footer>
+        </div>
+    );
+}
+kvsuresh@80a99745e6b0 app % cat page.module.css 
+.page {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+
+  display: grid;
+  grid-template-rows: 20px 1fr 20px;
+  align-items: center;
+  justify-items: center;
+  min-height: 100svh;
+  padding: 80px;
+  gap: 64px;
+  font-family: var(--font-geist-sans);
+}
+
+@media (prefers-color-scheme: dark) {
+  .page {
+    --gray-rgb: 255, 255, 255;
+    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
+    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
+
+    --button-primary-hover: #ccc;
+    --button-secondary-hover: #1a1a1a;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  grid-row-start: 2;
+}
+
+.main ol {
+  font-family: var(--font-geist-mono);
+  padding-left: 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  list-style-position: inside;
+}
+
+.main li:not(:last-of-type) {
+  margin-bottom: 8px;
+}
+
+.main code {
+  font-family: inherit;
+  background: var(--gray-alpha-100);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.ctas {
+  display: flex;
+  gap: 16px;
+}
+
+.ctas a {
+  appearance: none;
+  border-radius: 128px;
+  height: 48px;
+  padding: 0 20px;
+  border: none;
+  border: 1px solid transparent;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+a.primary {
+  background: var(--foreground);
+  color: var(--background);
+  gap: 8px;
+}
+
+a.secondary {
+  border-color: var(--gray-alpha-200);
+  min-width: 180px;
+}
+
+.footer {
+  grid-row-start: 3;
+  display: flex;
+  gap: 24px;
+}
+
+.footer a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer img {
+  flex-shrink: 0;
+}
+
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  a.primary:hover {
+    background: var(--button-primary-hover);
+    border-color: transparent;
+  }
+
+  a.secondary:hover {
+    background: var(--button-secondary-hover);
+    border-color: transparent;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 32px;
+    padding-bottom: 80px;
+  }
+
+  .main {
+    align-items: center;
+  }
+
+  .main ol {
+    text-align: center;
+  }
+
+  .ctas {
+    flex-direction: column;
+  }
+
+  .ctas a {
+    font-size: 14px;
+    height: 40px;
+    padding: 0 16px;
+  }
+
+  a.secondary {
+    min-width: auto;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo {
+    filter: invert();
+  }
+}
+kvsuresh@80a99745e6b0 app % cd ../public && ls
+board.png       file.svg        globe.svg       next.svg        vercel.svg      window.svg      placeholder.png
+kvsuresh@80a99745e6b0 public % 
+</bash>
+
+You must respond with a JSON object where key is the full file path(e.g. blank-nextjs-app/app/page.js) and value is stringified file contents(Note that only "" are to be used for strings in JSON). Note that you can create new files too.
+Always place the output JSON inside <json></json> tags.
+
+Assistant: Ok, here is the details of the files to be modified in the above project to implement the requirements in the image <json>
