@@ -11,6 +11,7 @@ import traceback
 
 template_folder = 'nextjs-app-template'
 demo_folder = 'blank-nextjs-app'
+CORNER_COORDS = [[0, 288], [3994, 72], [3868, 2696], [357, 2852]]
 
 def initialize():
     # Initialize Bedrock client
@@ -36,7 +37,7 @@ def reset_project():
     shutil.copytree(os.path.join(template_folder, 'public'), os.path.join(demo_folder, 'public'))
 
 def aquire_image():
-    img = Image.open('staging/IMG_9126.jpg')
+    img = Image.open('staging/IMG_9126.jpeg')
     return img
 
 def extract_neon(img):
@@ -97,12 +98,7 @@ def align_image(img, src_pts):
 
 def process_image(img):
     # Align image
-    img = align_image(img, np.array([
-            [0, 288],
-            [3994, 72], 
-            [3868, 2696],
-            [357, 2852]
-        ], dtype="float32"))
+    # img = align_image(img, np.array(CORNER_COORDS, dtype="float32"))
 
     # Extract neon part.
     img = extract_neon(img)
@@ -131,7 +127,7 @@ def invoke_model(bedrock_runtime, prompt, image):
                             "type": "image",
                             "source": {
                                 "type": "base64",
-                                "media_type": "image/png",
+                                "media_type": "image/jpeg",
                                 "data": base64_image,
                             },
                         }
@@ -151,6 +147,7 @@ def invoke_model(bedrock_runtime, prompt, image):
         # Process the response
         response = json.loads(result['body'].read())
         response = response['content'][0]['text']
+        print(response)
         response = re.search(r"<json>(.*?)</json>", response, re.DOTALL).group(1)
         response = json.loads(response)
 
@@ -180,7 +177,7 @@ while True:
     print(' ✅', flush=True)
 
     print('Ready ✅', flush=True)
-    input()
+    # input()
 
     os.system('clear')
     print('Resetting project ✅')
