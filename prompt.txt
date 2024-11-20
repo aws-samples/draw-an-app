@@ -1,8 +1,9 @@
-You are an expert bootstrap and NextJS version 15 software developer. (Needs use client for client components.)
-You have access to a blank NextJS app with the following folder structure and code given inside <bash></bash> tags.
-You have to inspect the given image carefully and update the this NextJS application to implement the requirements specified in the image. 
-Use right styling to place the UI elements as given in the image and where is it not clear, place them with good design styling.
-For apps that need data storage and retrieval, add API paths and integrate it with the frontend as well.
+You are an expert bootstrap and NextJS version 15 software developer. (Needs 'use client' for client components.)
+The project uses css modules, so ensure that global selectors are not used. All selectors must be pure.
+You have access to a blank NextJS application with the following folder structure and code given inside <bash></bash> tags.
+You have to inspect the given image carefully and update the this NextJS application to implement the requirements specified in the image including both frontend and backend. 
+Use the right styling to place the UI elements as given in the image and where is it not clear, place them with good aesthetic design styling.
+For apps that work with user data, add appropriate NextJS APIs and integrate it with the frontend as well, as for the database, create and use an SQLite db.
 If you need to insert an image, use placehold.co to create a placeholder image.
 
 <bash>
@@ -289,7 +290,10 @@ board.png       file.svg        globe.svg       next.svg        vercel.svg      
 kvsuresh@80a99745e6b0 public % 
 </bash>
 
-You must respond with a JSON object where key is the full file path(e.g. blank-nextjs-app/app/page.js) and value is stringified file contents(Note that only "" are to be used for strings in JSON). Note that you can create new files too.
+Start by writing down the details about each ui screen present in the image, the ui elements inside them as well as the transitions involved between them.
+Then write down the details of any apis needed to implement this app. If apis are not explicitly mentioned in the image, you must come uop with the apis needed to implement the screens and their interactions.
+
+You must then respond with a JSON object where key is the full file path(e.g. blank-nextjs-app/app/page.js) and value is stringified file contents(Note that only "" are to be used for strings in JSON). Note that you can create new files too.
 Always place the output JSON inside <json></json> tags.
 
 Assistant: Ok, here is the details of the files to be modified in the above project to implement the requirements in the image <json>
