@@ -60,7 +60,7 @@ def align_image(img, src_pts):
 
 # Execute color to alpha.
 input_image_path = "IMG_9126.jpg"
-output_image_path = "out.png"
+output_image_path = "out.jpg"
 
 # Read input image.
 img = Image.open(input_image_path)
