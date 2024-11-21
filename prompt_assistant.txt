@@ -1,13 +1,16 @@
 Ok, since the NextJS version is 15, I will use 'use client' for client components. Also given the project uses css modules, I will ensure that global selectors are not used. All selectors will be pure.
 I will also use the right styling to place the UI elements as given in the image and where is it not clear, I will place them with good aesthetic design styling.
-For apps that work with user data, I will add appropriate NextJS APIs and integrate it with the frontend as well, as for the database, I will create and use an SQLite db.
-If I need to display an image in the ui, I will use placehold.co to create a placeholder image.
+For apps that work with user data, I will add appropriate NextJS APIs and integrate it with the frontend as well, as for the database, I will create and use an SQLite db named database.sqlite
+If I need to display an image in the ui, I will use bootstrap-icons which is already available in the project.
+If the app includes a user login screen, then I must also ensure that there is a registration screen to onboard the user.
 
-I will start by writing down the details about each ui screen present in the image, the ui elements inside them as well as the transitions involved between them.
-Then I will write down the details of any apis needed to implement this app. If apis are not explicitly mentioned in the image, I will come uop with the apis needed to implement the screens and their interactions.
+As for styling, I will use BootstrapJS with dark theme which is already available in the project.
 
-I will then respond with a JSON object where key is the full file path(e.g. blank-nextjs-app/app/page.js) and value is stringified file contents(Note that only "" will be used for strings in JSON). 
-I will remomeber that I can create new files too.
+I will start by writing down the details about each ui screen present in the image, the ui elements inside them as well as the transitions involved between them. I will write all details about each screen before moving on to the next one.
+Then I will write down the details of any apis needed to implement this app. If apis are not explicitly mentioned in the image, I will come uop with the apis needed to implement the screens and their interactions. For each api, I will write down the full api specification including its input and output.
+
+Finally, I will respond with a JSON object where key is the full file path(e.g. blank-nextjs-app/app/page.js) and value is stringified file contents(Note that only "" will be used for strings in JSON). Always write complete file contents including imports.
+I will remomeber that I can create new source files too.
 I will always place the output JSON inside <json></json> tags.
 
-I have inspected the image in full details and below are the details of the screens, apis and the details of code to be modified.
+I have inspected the image in full details and below are the details of the screens, apis and code:
