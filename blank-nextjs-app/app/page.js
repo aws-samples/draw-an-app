@@ -1,73 +1,57 @@
 "use client";
 import { useState } from "react";
 import styles from "./page.module.css";
-import OrderForm from "./components/OrderForm";
+import LoginForm from "./components/LoginForm";
+import OrderConfirm from "./components/OrderConfirm";
 import OrderDetails from "./components/OrderDetails";
 import ThankYou from "./components/ThankYou";
 
 export default function Home() {
-    const [step, setStep] = useState(1);
+    const [screen, setScreen] = useState("login");
     const [order, setOrder] = useState(null);
 
-    const handleSubmit = async (formData) => {
-        try {
-            const response = await fetch("/api/orders", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-            const data = await response.json();
-            setOrder(data);
-            setStep(2);
-        } catch (error) {
-            console.error("Error creating order:", error);
+    const handleLogin = async (name, pwd) => {
+        const res = await fetch("/api/login", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({name, pwd})
+        });
+        if(res.ok) {
+            setScreen("orderConfirm");
         }
     };
 
-    const handleEdit = async (orderId, updates) => {
-        try {
-            const response = await fetch(`/api/orders/${orderId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(updates),
-            });
-            const data = await response.json();
-            setOrder(data);
-        } catch (error) {
-            console.error("Error updating order:", error);
-        }
+    const handleOrder = async (details) => {
+        const res = await fetch("/api/order", {
+            method: "POST", 
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(details)
+        });
+        const data = await res.json();
+        setOrder(data);
+        setScreen("orderDetails");
     };
 
-    const handleCancel = async (orderId) => {
-        try {
-            await fetch(`/api/orders/${orderId}`, {
-                method: "DELETE",
-            });
-            setStep(1);
-            setOrder(null);
-        } catch (error) {
-            console.error("Error canceling order:", error);
-        }
+    const handlePrint = async () => {
+        await fetch(`/api/order/${order.id}/print`, {method: "POST"});
+    };
+
+    const handleCancel = async () => {
+        await fetch(`/api/order/${order.id}/cancel`, {method: "POST"});
+        setScreen("thankYou");
     };
 
     return (
-        <div className={styles.page}>
-            <main className={styles.main}>
-                {step === 1 && <OrderForm onSubmit={handleSubmit} />}
-                {step === 2 && (
-                    <OrderDetails
-                        order={order}
-                        onEdit={handleEdit}
-                        onCancel={handleCancel}
-                        onContinue={() => setStep(3)}
-                    />
-                )}
-                {step === 3 && <ThankYou />}
-            </main>
+        <div className={styles.container}>
+            {screen === "login" && <LoginForm onSubmit={handleLogin} />}
+            {screen === "orderConfirm" && <OrderConfirm onSubmit={handleOrder} />}
+            {screen === "orderDetails" && 
+                <OrderDetails 
+                    order={order}
+                    onPrint={handlePrint}
+                    onCancel={handleCancel}
+                />}
+            {screen === "thankYou" && <ThankYou />}
         </div>
     );
 }

@@ -1,0 +1,18 @@
+.container {
+    text-align: center;
+    padding: 2rem;
+}
+
+.container button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.container button:hover {
+    background: #218838;
+}

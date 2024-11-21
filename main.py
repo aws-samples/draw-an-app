@@ -35,6 +35,10 @@ def reset_project():
         shutil.rmtree(os.path.join(demo_folder, 'app'))
         shutil.rmtree(os.path.join(demo_folder, 'public'))
 
+    # Remove database file.
+    if os.path.exists('database.sqlite'):
+        os.remove('database.sqlite')
+
     # Copy template code.
     shutil.copytree(os.path.join(template_folder, 'app'), os.path.join(demo_folder, 'app'))
     shutil.copytree(os.path.join(template_folder, 'public'), os.path.join(demo_folder, 'public'))
@@ -120,6 +124,8 @@ def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image):
     payload = {
         "anthropic_version": "bedrock-2023-05-31",
         "max_tokens": 8192,
+        "temperature": 0.0,
+        "top_k": 1,
         "system": system_prompt,
         "messages": [
             {
@@ -162,7 +168,7 @@ def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image):
     # Process the response
     response = json.loads(result['body'].read())
     response = response['content'][0]['text']
-    print(response)
+    # print(response)
     response = re.search(r"<json>(.*?)</json>", response, re.DOTALL).group(1)
     response = json.loads(response)
 
@@ -179,44 +185,46 @@ def update_project(contents):
             file.write(contents[path])
 
 # Main flow.
-bedrock_runtime, system_prompt, chat_prompt = initialize()
-
-while True:
-    os.system('clear')
-    
-    print('Resetting project', end='', flush=True)
-    reset_project()
-    print(' ✅', flush=True)
-
-    print('Ready ✅', flush=True)
-    # input()
-
-    os.system('clear')
-    print('Resetting project ✅')
-    print('Ready ✅', flush=True)
-
-    print('Capturing board image', end='', flush=True)
-    image = aquire_image()
-    print(' ✅', flush=True)
-
-    print('Processing image', end='', flush=True)
-    image = process_image(image)
-    print(' ✅', flush=True)
+def main():
+    bedrock_runtime, system_prompt, chat_prompt = initialize()
 
     while True:
-        try:
-            print('Calling multimodal LLM', end='', flush=True)
-            response = invoke_model(bedrock_runtime, system_prompt, chat_prompt, image)
-            break
-        except Exception as e:
-            print(type(e).__name__ + ' ❌ \nTrying again', flush=True)
-            time.sleep(1)
-    print(' ✅', flush=True)
+        os.system('clear')
+        
+        print('Resetting project', end='', flush=True)
+        reset_project()
+        print(' ✅', flush=True)
 
-    print('Updating project', end='', flush=True)
-    update_project(response)
-    print(' ✅', flush=True)
+        print('Ready ✅', flush=True)
+        input()
 
-    print('Done 🎉', flush=True)
-    break
+        os.system('clear')
+        print('Resetting project ✅')
+        print('Ready ✅', flush=True)
 
+        print('Capturing board image', end='', flush=True)
+        image = aquire_image()
+        print(' ✅', flush=True)
+
+        print('Processing image', end='', flush=True)
+        image = process_image(image)
+        print(' ✅', flush=True)
+
+        while True:
+            try:
+                print('Calling multimodal LLM', end='', flush=True)
+                response = invoke_model(bedrock_runtime, system_prompt, chat_prompt, image)
+                break
+            except Exception as e:
+                print(type(e).__name__ + ' ❌ \nTrying again', flush=True)
+                time.sleep(1)
+        print(' ✅', flush=True)
+
+        print('Updating project', end='', flush=True)
+        update_project(response)
+        print(' ✅', flush=True)
+
+        print('Done 🎉', flush=True)
+        break
+
+main()

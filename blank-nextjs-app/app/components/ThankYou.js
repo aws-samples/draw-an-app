@@ -1,8 +1,7 @@
 export default function ThankYou() {
     return (
-        <div className={styles.thankYou}>
+        <div style={{textAlign: "center"}}>
             <h2>Thank You</h2>
-            <p>Your order has been confirmed!</p>
         </div>
     );
 }
