@@ -7,6 +7,7 @@ import io
 import shutil
 from PIL import Image
 import numpy as np
+import time
 import traceback
 
 template_folder = 'nextjs-app-template'
@@ -20,11 +21,13 @@ def initialize():
         region_name='us-west-2'
     )
 
-    # Open the prompt file and read its contents into a string
-    with open('prompt.txt', 'r') as file:
-        prompt = file.read()
+    # Open the prompt files and read their contents into a string
+    with open('prompt_system.txt', 'r') as file:
+        system_prompt = file.read()
+    with open('prompt_assistant.txt', 'r') as file:
+        chat_prompt = file.read()
 
-    return (bedrock_runtime, prompt)
+    return (bedrock_runtime, system_prompt, chat_prompt)
 
 def reset_project():
     # Remove existing code.
@@ -105,56 +108,65 @@ def process_image(img):
 
     return img
 
-def invoke_model(bedrock_runtime, prompt, image):
-    try:
-        # Create image file and base64 encode it.
-        buffer = io.BytesIO()
-        image.save(buffer, format="JPEG")
-        buffer.seek(0)
+def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image):
+    # Create image file and base64 encode it.
+    buffer = io.BytesIO()
+    image.save(buffer, format="JPEG")
+    buffer.seek(0)
 
-        base64_image = base64.b64encode(buffer.read()).decode('utf-8')
+    base64_image = base64.b64encode(buffer.read()).decode('utf-8')
 
-        # Prepare the payload
-        payload = {
-            "anthropic_version": "bedrock-2023-05-31",
-            "max_tokens": 8192,
-            "system": prompt,
-            "messages": [
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "image",
-                            "source": {
-                                "type": "base64",
-                                "media_type": "image/jpeg",
-                                "data": base64_image,
-                            },
-                        }
-                    ],
-                }
-            ],
-        }
+    # Prepare the payload
+    payload = {
+        "anthropic_version": "bedrock-2023-05-31",
+        "max_tokens": 8192,
+        "system": system_prompt,
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "image",
+                        "source": {
+                            "type": "base64",
+                            "media_type": "image/jpeg",
+                            "data": base64_image,
+                        },
+                    },
+                    {
+                        "type": "text",
+                        "text": "Use this image and proceed."
+                    }
+                ],
+            },
+            {
+                "role": "assistant",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": chat_prompt
+                    }
+                ],
+            }
+        ],
+    }
 
-        # Invoke the model
-        result = bedrock_runtime.invoke_model(
-            modelId='anthropic.claude-3-5-sonnet-20241022-v2:0',
-            contentType="application/json",
-            accept="application/json",
-            body=json.dumps(payload)
-        )
+    # Invoke the model
+    result = bedrock_runtime.invoke_model(
+        modelId='anthropic.claude-3-5-sonnet-20241022-v2:0',
+        contentType="application/json",
+        accept="application/json",
+        body=json.dumps(payload)
+    )
 
-        # Process the response
-        response = json.loads(result['body'].read())
-        response = response['content'][0]['text']
-        print(response)
-        response = re.search(r"<json>(.*?)</json>", response, re.DOTALL).group(1)
-        response = json.loads(response)
+    # Process the response
+    response = json.loads(result['body'].read())
+    response = response['content'][0]['text']
+    print(response)
+    response = re.search(r"<json>(.*?)</json>", response, re.DOTALL).group(1)
+    response = json.loads(response)
 
-        return response
-    
-    except Exception as e:
-        print(traceback.format_exc())
+    return response
 
 def update_project(contents):
     for path in contents:
@@ -167,7 +179,7 @@ def update_project(contents):
             file.write(contents[path])
 
 # Main flow.
-bedrock_runtime, prompt = initialize()
+bedrock_runtime, system_prompt, chat_prompt = initialize()
 
 while True:
     os.system('clear')
@@ -191,8 +203,14 @@ while True:
     image = process_image(image)
     print(' ✅', flush=True)
 
-    print('Calling multimodal LLM', end='', flush=True)
-    response = invoke_model(bedrock_runtime, prompt, image)
+    while True:
+        try:
+            print('Calling multimodal LLM', end='', flush=True)
+            response = invoke_model(bedrock_runtime, system_prompt, chat_prompt, image)
+            break
+        except Exception as e:
+            print(type(e).__name__ + ' ❌ \nTrying again', flush=True)
+            time.sleep(1)
     print(' ✅', flush=True)
 
     print('Updating project', end='', flush=True)
