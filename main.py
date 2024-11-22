@@ -112,10 +112,10 @@ def process_image(img):
 
     return img
 
-def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image):
+def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image, format="JPEG"):
     # Create image file and base64 encode it.
     buffer = io.BytesIO()
-    image.save(buffer, format="JPEG")
+    image.save(buffer, format)    
     buffer.seek(0)
 
     base64_image = base64.b64encode(buffer.read()).decode('utf-8')
@@ -135,7 +135,7 @@ def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image):
                         "type": "image",
                         "source": {
                             "type": "base64",
-                            "media_type": "image/jpeg",
+                            "media_type": "image/"+format.lower(),
                             "data": base64_image,
                         },
                     },
@@ -216,6 +216,7 @@ def main():
                 response = invoke_model(bedrock_runtime, system_prompt, chat_prompt, image)
                 break
             except Exception as e:
+                print(traceback.format_exc())
                 print(type(e).__name__ + ' ❌ \nTrying again', flush=True)
                 time.sleep(1)
         print(' ✅', flush=True)
@@ -227,4 +228,4 @@ def main():
         print('Done 🎉', flush=True)
         break
 
-main()
+#main()
