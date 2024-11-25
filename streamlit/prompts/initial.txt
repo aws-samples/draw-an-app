@@ -1,0 +1,3 @@
+Based on the conversation history below, respond to the human in a concise, yet friendly manner:
+{chat_history}
+

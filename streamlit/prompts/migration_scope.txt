@@ -1,0 +1,11 @@
+Conversation history:
+{chat_history}
+
+Based on the above information about a migrating a existing code/application, ask questions and make suggestions related to features and technology required. (Do not repeat already asked questions.)
+Once you have clarity on the application's requirements and technology, describe the same to the human and ask for human approval. (You must insist on human typing "yes, proceed" verbatim.)
+
+Your response should start with either QUESTION (If you have questions for the human.) or APPROVED (If and only if the human has typed "yes, proceed" verbatim.), followed by a : symbol, and then the textual content of your response.
+
+For example:
+QUESTION: I need a few more things clarified with you.
+APPROVED: Here is the list of requirements.

@@ -9,38 +9,17 @@ from PIL import Image
 import numpy as np
 import time
 import traceback
-import cv2
+from langchain.prompts import ChatPromptTemplate
+from langchain.schema import HumanMessage, AIMessage
+from langchain_aws import ChatBedrockConverse
+from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
+from langchain.chains import LLMChain
+from langchain_aws import ChatBedrock
+from langchain_core.messages import HumanMessage
 
 template_folder = 'nextjs-app-template'
 demo_folder = 'blank-nextjs-app'
 CORNER_COORDS = [[0, 288], [3994, 72], [3868, 2696], [357, 2852]]
-
-def initialize_camera(camera_index=0):
-    """Initialize and return a camera object."""
-    camera = cv2.VideoCapture(camera_index)
-    if not camera.isOpened():
-        raise IOError("Cannot open webcam")
-    return camera
-
-def capture_frame(camera):
-    """Capture a single frame from the camera."""
-    ret, frame = camera.read()
-    if not ret:
-        raise IOError("Failed to capture image")
-    return frame
-
-def resize_image(image, width, height):
-    """Resize the image to the specified dimensions."""
-    return cv2.resize(image, (width, height))
-
-def save_image(image, filename):
-    """Save the image to a file."""
-    cv2.imwrite(filename, image)
-    print(f"Image saved as {filename}")
-
-def display_frame(frame, window_name='Webcam'):
-    """Display the frame in a named window."""
-    cv2.imshow(window_name, frame)
 
 def initialize():
     # Initialize Bedrock client
@@ -72,7 +51,7 @@ def reset_project():
     shutil.copytree(os.path.join(template_folder, 'public'), os.path.join(demo_folder, 'public'))
 
 def aquire_image():
-    img = Image.open('captured_image.jpeg')
+    img = Image.open('staging/IMG_9126.jpeg')
     return img
 
 def extract_neon(img):
@@ -169,7 +148,7 @@ def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image, format="JPE
                     },
                     {
                         "type": "text",
-                        "text": "Use this image and proceed."
+                        "text": "Use this image and proceed. "
                     }
                 ],
             },
@@ -202,6 +181,70 @@ def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image, format="JPE
 
     return response
 
+def invoke_model_langchain(bedrock_runtime, system_prompt, chat_prompt, image, format="JPEG"):
+    # Create image file and base64 encode it.
+    buffer = io.BytesIO()
+    image.save(buffer, format)    
+    buffer.seek(0)
+
+    base64_image = base64.b64encode(buffer.read()).decode('utf-8')
+
+    # Initialize Bedrock LLM
+
+    llm = ChatBedrock(
+        model='anthropic.claude-3-5-sonnet-20241022-v2:0',
+        temperature=0,
+        max_tokens=8192,
+        client=bedrock_runtime,
+    )
+
+    # Create a JSON output parser
+    json_parser = JsonOutputParser()
+    
+    message = HumanMessage(
+        content=[
+            {"type": "text", "text": "Use this image and proceed.You must always return valid JSON"},
+            {
+                            "type": "image",
+                            "source": {
+                                "type": "base64",
+                                "media_type":  "image/"+format.lower(),
+                                "data": base64_image,
+                            },
+            }            
+        ],
+    )
+
+    format_instructions = json_parser.get_format_instructions()
+    # Define the chat prompt template
+    chat_template = ChatPromptTemplate.from_messages([
+        ("system", "{system_prompt}"),
+        message,
+        ("ai", "{chat_prompt}")
+    ])
+
+    # Create the LLMChain
+    # chain = LLMChain(
+    #     llm=llm,
+    #     prompt=chat_template,
+    #     output_parser=json_parser
+    # )
+
+    chain = chat_template | llm | StrOutputParser()
+
+
+    # Invoke the chain
+    result = chain.invoke({"chat_prompt": chat_prompt, "system_prompt" : system_prompt})
+
+    print(result)
+    # Process the response
+    response = result
+    response = re.search(r"<json>(.*?)</json>", response, re.DOTALL).group(1)
+    response = json.loads(response)
+
+    return response
+
+
 def update_project(contents):
     for path in contents:
         # Create all required directories.
@@ -215,59 +258,46 @@ def update_project(contents):
 # Main flow.
 def main():
     bedrock_runtime, system_prompt, chat_prompt = initialize()
-    
-    camera = initialize_camera()
-    print("Camera initialize")
 
     while True:
-        frame = capture_frame(camera)
-        display_frame(frame)
-        key = cv2.waitKey(1) & 0xFF
-        if key == ord(' '):
-            resized_frame = resize_image(frame, 1120, 1120)
-            save_image(resized_frame, 'captured_image.jpeg')
-            os.system('clear')
+        os.system('clear')
         
-            print('Resetting project', end='', flush=True)
-            reset_project()
-            print(' ✅', flush=True)
+        print('Resetting project', end='', flush=True)
+        reset_project()
+        print(' ✅', flush=True)
 
-            print('Ready ✅', flush=True)
-            os.system('clear')
-            print('Resetting project ✅')
-            print('Ready ✅', flush=True)
+        print('Ready ✅', flush=True)
+        input()
 
-            print('Capturing board image', end='', flush=True)
-            image = aquire_image()
-            print(' ✅', flush=True)
+        os.system('clear')
+        print('Resetting project ✅')
+        print('Ready ✅', flush=True)
 
-            print('Processing image', end='', flush=True)
-            #image = process_image(image)
-            print(' ✅', flush=True)
+        print('Capturing board image', end='', flush=True)
+        image = aquire_image()
+        print(' ✅', flush=True)
 
-            while True:
-                try:
-                    print('Calling multimodal LLM', end='', flush=True)
-                    response = invoke_model(bedrock_runtime, system_prompt, chat_prompt, image)
-                    break
-                except Exception as e:
-                    print(traceback.format_exc())
-                    print(type(e).__name__ + ' ❌ \nTrying again', flush=True)
-                    time.sleep(1)
-            print(' ✅', flush=True)
+        #print('Processing image', end='', flush=True)
+        #image = process_image(image)
+        #print(' ✅', flush=True)
 
-            print('Updating project', end='', flush=True)
-            update_project(response)
-            print(' ✅', flush=True)
+        while True:
+            try:
+                print('Calling multimodal LLM', end='', flush=True)
+                response = invoke_model_langchain(bedrock_runtime, system_prompt, chat_prompt, image)
+                break
+            except Exception as e:
+                print(traceback.format_exc())
+                print(type(e).__name__ + ' ❌ \nTrying again', flush=True)
+                time.sleep(1)
+        print(' ✅', flush=True)
 
-            print('Done 🎉', flush=True)            
-        elif key == ord('q'):
-            print("Exiting...")
-            break
-    
-    camera.release()
-    cv2.destroyAllWindows()
+        print('Updating project', end='', flush=True)
+        update_project(response)
+        print(' ✅', flush=True)
 
-    
+        print('Done 🎉', flush=True)
+        break
+
 if __name__ == "__main__":
     main()
