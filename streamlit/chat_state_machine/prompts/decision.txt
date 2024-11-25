@@ -1,0 +1,19 @@
+The human and you are currently engaged in the following task:
+{current_task}
+
+A task change has been initiated to switch over to the below task:
+{next_task}
+
+The reason for the switch over is:
+{switching_reason}
+
+Conversation history:
+{chat_history}
+
+Determine if the human wants to proceed to the new task or continue with the current task.
+
+You must respond in the following json format with no extra text:
+{{
+    "action":  Value must be PROCEED (If human has confirmed to proceed to the next task.) or CANCEL (If human has decided to continue with the current task.), presented as string.
+    "message": Should be the textual content of your response.
+}}

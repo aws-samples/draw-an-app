@@ -1,0 +1,10 @@
+The human and you are currently engaged in the following task:
+{current_task}
+
+Conversation history:
+{chat_history}
+
+Based on the above information, choose the best match from the below list:
+{branches}
+
+You must respond with the list number of the chosen item, presented as a whole number, without any extra text:

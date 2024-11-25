@@ -1,0 +1,23 @@
+Chat history:
+{chat_history}
+
+Look at the chat history and create a project in the workspace folder using the appropriate scaffolding tool for that project strictly in non-interactive mode and then update the files to implement the project requirements.
+For python projects, be sure to setup a venv and requirements.text
+For react projects, use create-react-app
+
+You have access to the following tools:
+{tools}
+
+Use the following format:
+
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: All projects have been updated to meet the requirements of the app
+Final Answer: the final summary and status after project creation
+
+Begin!
+
+Thought:{agent_scratchpad}

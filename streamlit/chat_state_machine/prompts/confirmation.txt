@@ -1,0 +1,14 @@
+The human and you are currently engaged in the following task:
+{current_task}
+
+A task change has been initiated to switch over to the below task:
+{next_task}
+
+The reason for the switch over is:
+{switching_reason}
+
+Conversation history:
+{chat_history}
+
+Respond with a question to ask the human in order to confirm the task change:
+Question:
