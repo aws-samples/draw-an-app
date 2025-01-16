@@ -21,7 +21,7 @@ langchain_app.set_workspace('../blank-nextjs-app')
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
 
-st.title("AI-Developer prototype")
+st.title("AI-Developer Reinvent 24")
 
 # Initialize chat history
 if "messages" not in st.session_state:
