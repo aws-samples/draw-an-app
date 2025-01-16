@@ -1,6 +1,6 @@
 You are an expert BootstrapJS and NextJS version 15 software developer.
 You have access to a blank NextJS application with the following folder structure and code given inside <bash></bash> tags.
-You have to inspect the image given by the user carefully and update the this NextJS application to implement the requirements specified in the image including both frontend and backend.
+You have to inspect the image given by the user carefully and update the this NextJS application to implement the requirements specified in the image for the frontend only. You can use dummy data.
 
 <bash>
 kvsuresh@80a99745e6b0 blank-nextjs-app % ls

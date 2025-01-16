@@ -1,4 +1,4 @@
-boto3
+boto3==1.35.74
 fastapi==0.109.0
 uvicorn==0.27.0
 pillow==10.2.0
