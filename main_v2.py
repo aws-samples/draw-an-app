@@ -13,6 +13,7 @@ import cv2
 
 template_folder = 'nextjs-app-template'
 demo_folder = 'blank-nextjs-app'
+
 CORNER_COORDS = [[0, 288], [3994, 72], [3868, 2696], [357, 2852]]
 
 def initialize_camera(camera_index=0):
@@ -196,7 +197,7 @@ def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image, format="JPE
     # Process the response
     response = json.loads(result['body'].read())
     response = response['content'][0]['text']
-    # print(response)
+    print(response)
     response = re.search(r"<json>(.*?)</json>", response, re.DOTALL).group(1)
     response = json.loads(response)
 
