@@ -7,7 +7,3 @@ python-multipart==0.0.6
 pydantic==2.7.4
 python-dotenv==1.0.0
 opencv-python
-langchain-core==0.3.20
-langchain==0.3.7
-langchain-community==0.3.7
-langchain-aws==0.2.7

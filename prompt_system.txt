@@ -3,12 +3,12 @@ You have access to a blank NextJS application with the following folder structur
 You have to inspect the image given by the user carefully and update the this NextJS application to implement the requirements specified in the image for the frontend only. You can use dummy data.
 
 <bash>
-kvsuresh@80a99745e6b0 blank-nextjs-app % ls
+user1@machineid blank-nextjs-app % ls
 README.md               jsconfig.json           node_modules            package.json
 app                     next.config.mjs         package-lock.json       public
-kvsuresh@80a99745e6b0 blank-nextjs-app % cd app && ls
+user1@machineid blank-nextjs-app % cd app && ls
 favicon.ico     fonts           globals.css     layout.js       page.js         page.module.css
-kvsuresh@80a99745e6b0 app % cat globals.css 
+user1@machineid app % cat globals.css 
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -51,7 +51,7 @@ a {
     color-scheme: dark;
   }
 }
-kvsuresh@80a99745e6b0 app % cat layout.js 
+user1@machineid app % cat layout.js 
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -80,7 +80,7 @@ export default function RootLayout({ children }) {
         </html>
     );
 }
-kvsuresh@80a99745e6b0 app % cat page.js 
+user1@machineid app % cat page.js 
 import Image from "next/image";
 import styles from "./page.module.css";
 
@@ -112,7 +112,7 @@ export default function Home() {
         </div>
     );
 }
-kvsuresh@80a99745e6b0 app % cat page.module.css 
+user1@machineid app % cat page.module.css 
 .page {
   --gray-rgb: 0, 0, 0;
   --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
@@ -281,7 +281,7 @@ a.secondary {
     filter: invert();
   }
 }
-kvsuresh@80a99745e6b0 app % cd ../public && ls
+user1@machineid app % cd ../public && ls
 board.png       file.svg        globe.svg       next.svg        vercel.svg      window.svg      placeholder.png
-kvsuresh@80a99745e6b0 public % 
+user1@machineid public % 
 </bash>
