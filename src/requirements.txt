@@ -1,0 +1,7 @@
+boto3==1.35.74
+pillow==10.3.0
+python-multipart==0.0.18
+python-dotenv==1.0.0
+opencv-python
+streamlit==1.31.0
+numpy==1.26.3
