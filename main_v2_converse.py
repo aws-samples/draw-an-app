@@ -77,27 +77,6 @@ def aquire_image():
     img = Image.open('captured_image.jpeg')
     return img
 
-def extract_neon(img):
-    # GIMP's Color to alpha algorithm.
-    color = np.array([0,0,0])
-    transparency_threshold = 0.8
-    opacity_threshold = 1.0
-
-    pixels = np.array(img)
-    opaque_pixels = pixels[:,:,:3]
-
-    distances = np.amax(abs(opaque_pixels - color), axis=2)/255
-    alpha = (distances - transparency_threshold) / abs(opacity_threshold - transparency_threshold)
-    alpha = np.clip(alpha, 0, 1)
-
-    # Use alpha values as color for all channels to get the black and white image.
-    opaque_pixels[:, :, 0] = alpha * 255
-    opaque_pixels[:, :, 1] = alpha * 255
-    opaque_pixels[:, :, 2] = alpha * 255
-
-    # Create neon image and return.
-    neon_image = Image.fromarray(opaque_pixels, "RGB")
-    return neon_image
 
 def calculate_perspective_matrix(src_points, dst_points):
     matrix = []
@@ -138,7 +117,7 @@ def process_image(img):
     # img = align_image(img, np.array(CORNER_COORDS, dtype="float32"))
 
     # Extract neon part.
-    img = extract_neon(img)
+    #img = extract_neon(img)
 
     return img
 
@@ -270,7 +249,7 @@ def main():
         key = cv2.waitKey(1) & 0xFF
         if key == ord(' '):
             resized_frame = resize_image(frame, 1120, 1120)
-            #save_image(resized_frame, 'captured_image.jpeg')
+            save_image(resized_frame, 'captured_image.jpeg')
             os.system('clear')
         
             print('Resetting project', end='', flush=True)

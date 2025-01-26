@@ -136,7 +136,7 @@ def process_image(img):
     # img = align_image(img, np.array(CORNER_COORDS, dtype="float32"))
 
     # Extract neon part.
-    img = extract_neon(img)
+    #img = extract_neon(img)
 
     return img
 
