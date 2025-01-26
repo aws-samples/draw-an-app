@@ -10,6 +10,33 @@ This project uses AWS Bedrock's Claude 3 Sonnet model to convert hand-drawn UI s
 - Access to Claude 3 Sonnet model in AWS Bedrock
 - Git
 
+## Architecture
+
+![Architecture Diagram](draw-an-app.drawio.png)
+
+The system follows this flow:
+
+1. **Image Capture**: The application uses OpenCV to access your webcam and capture hand-drawn UI sketches.
+
+2. **Image Processing**: The captured image is processed and converted to a format suitable for analysis.
+
+3. **Claude 3 Integration**: The processed image is sent to AWS Bedrock's Claude 3 Sonnet model along with carefully crafted prompts that guide the model to:
+   - Analyze and understand the UI elements in the sketch
+   - Generate appropriate Next.js components and code
+   - Ensure the generated code follows best practices
+
+4. **Code Generation**: Claude 3 generates the necessary Next.js components, styles, and functionality based on the sketch.
+
+5. **Application Update**: The system automatically:
+   - Updates the Next.js application files
+   - Applies any necessary styling
+   - Implements required functionality
+   - Hot-reloads the development server
+
+6. **Live Preview**: The changes are immediately visible in the running Next.js application, providing instant feedback on the generated code.
+
+7. **Future Updates**: The developers can use the Amazon Q for Developer for future updates to the generated code.
+
 ## Environment Setup
 
 1. Clone the repository:

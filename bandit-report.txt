@@ -1,0 +1,110 @@
+Run started:2025-01-26 03:05:47.765719
+
+Test results:
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.2/plugins/b605_start_process_with_a_shell.html
+   Location: ./main_v2.py:230:12
+229	            save_image(resized_frame, 'captured_image.jpeg')
+230	            os.system('clear')
+231	        
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./main_v2.py:230:12
+229	            save_image(resized_frame, 'captured_image.jpeg')
+230	            os.system('clear')
+231	        
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.2/plugins/b605_start_process_with_a_shell.html
+   Location: ./main_v2.py:237:12
+236	            print('Ready ✅', flush=True)
+237	            os.system('clear')
+238	            print('Resetting project ✅')
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./main_v2.py:237:12
+236	            print('Ready ✅', flush=True)
+237	            os.system('clear')
+238	            print('Resetting project ✅')
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.2/plugins/b605_start_process_with_a_shell.html
+   Location: ./main_v2_converse.py:367:12
+366	            #save_image(resized_frame, 'captured_image.jpeg')
+367	            os.system('clear')
+368	        
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./main_v2_converse.py:367:12
+366	            #save_image(resized_frame, 'captured_image.jpeg')
+367	            os.system('clear')
+368	        
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.2/plugins/b605_start_process_with_a_shell.html
+   Location: ./main_v2_converse.py:374:12
+373	            print('Ready ✅', flush=True)
+374	            os.system('clear')
+375	            print('Resetting project ✅')
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.2/plugins/b607_start_process_with_partial_path.html
+   Location: ./main_v2_converse.py:374:12
+373	            print('Ready ✅', flush=True)
+374	            os.system('clear')
+375	            print('Resetting project ✅')
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 11235
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 8
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 8
+Files skipped (9):
+	./CODE_OF_CONDUCT.md (syntax error while parsing AST from file)
+	./CONTRIBUTING.md (syntax error while parsing AST from file)
+	./LICENSE (syntax error while parsing AST from file)
+	./NOTICE (syntax error while parsing AST from file)
+	./README.md (syntax error while parsing AST from file)
+	./captured_image.jpeg (syntax error while parsing AST from file)
+	./prompt_assistant.txt (syntax error while parsing AST from file)
+	./prompt_system.txt (syntax error while parsing AST from file)
+	./requirements.txt (syntax error while parsing AST from file)

@@ -6,7 +6,6 @@ import os
 import io
 import shutil
 from PIL import Image
-import numpy as np
 import time
 import traceback
 import cv2
@@ -247,98 +246,6 @@ def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image, format="JPE
         print(f"An error occurred: {str(err)}")
         return {"error": str(err)}
 
-
-
-# def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image, format="JPEG"):
-#     # Create image file and base64 encode it.
-#     buffer = io.BytesIO()
-#     image.save(buffer, format)    
-#     buffer.seek(0)
-
-#     base64_image = base64.b64encode(buffer.read()).decode('utf-8')
-
-#     # Prepare the payload
-#     payload = {
-#         "anthropic_version": "bedrock-2023-05-31",
-#         "max_tokens": 8192,
-#         "temperature": 0.0,
-#         "top_k": 1,
-#         "system": system_prompt,
-#         "messages": [
-#             {
-#                 "role": "user",
-#                 "content": [
-#                     {
-#                         "type": "image",
-#                         "source": {
-#                             "type": "base64",
-#                             "media_type": "image/"+format.lower(),
-#                             "data": base64_image,
-#                         },
-#                     },
-#                     {
-#                         "type": "text",
-#                         "text": "Use this image and proceed."
-#                     }
-#                 ],
-#             },
-#             {
-#                 "role": "assistant",
-#                 "content": [
-#                     {
-#                         "type": "text",
-#                         "text": chat_prompt
-#                     }
-#                 ],
-#             }
-#         ],
-#     }
-
-#     # #Invoke the model
-#     # result = bedrock_runtime.invoke_model(
-#     #     modelId='anthropic.claude-3-5-sonnet-20241022-v2:0',
-#     #     #modelId='anthropic.claude-3-sonnet-20240229-v1:0',
-#     #     contentType="application/json",
-#     #     accept="application/json",
-#     #     body=json.dumps(payload)
-#     # )
-
-#     # # Process the response
-#     # response = json.loads(result['body'].read())
-#     # response = response['content'][0]['text']
-#     # print(response)
-#     # response = re.search(r"<json>(.*?)</json>", response, re.DOTALL).group(1)
-#     # response = json.loads(response)
-
-#     response_stream = bedrock_runtime.invoke_model_with_response_stream(
-#         modelId='anthropic.claude-3-5-sonnet-20241022-v2:0',
-#         #modelId='anthropic.claude-3-sonnet-20240229-v1:0',
-#         contentType="application/json",
-#         accept="application/json",
-#         body=json.dumps(payload)
-#     )
-
-#     # Process the response stream
-#     output = []
-
-#     stream = response_stream.get('body')
-#     if stream:
-#         for event in stream:
-#             chunk = event.get('chunk')
-#             if chunk:
-#                 chunk_obj = json.loads(chunk.get('bytes').decode())
-#                 if chunk_obj["type"] == 'content_block_delta':
-#                     text = chunk_obj['delta']['text']
-#                     print(text)
-#                     output.append(text)                
-
-    
-#     full_response = ''.join(output)
-#     # Extract JSON from the full response
-#     response = re.search(r"<json>(.*?)</json>", full_response, re.DOTALL).group(1)
-#     response = json.loads(response)
-
-#     return response
 
 def update_project(contents):
     for path in contents:

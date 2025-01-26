@@ -6,7 +6,6 @@ import os
 import io
 import shutil
 from PIL import Image
-import numpy as np
 import time
 import traceback
 import cv2
