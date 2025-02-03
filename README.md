@@ -1,4 +1,3 @@
-
 # Draw-an-App - Sketch to Reality
 
 This project uses AWS Bedrock's Claude 3 Sonnet model to convert hand-drawn UI sketches into working web applications. It supports two modes of operation:
@@ -63,7 +62,7 @@ python -m venv venv
 
 3. Install required packages:
 ```bash
-pip install -r requirements.txt
+pip install -r src/requirements.txt
 ```
 
 ## AWS Bedrock Configuration
@@ -107,7 +106,7 @@ Keep this server running to view your generated applications at http://localhost
 2. In a new terminal, run the webcam-based application:
 ```bash
 # Make sure you're in the project root directory
-python main_v2.py
+python src/main_v2.py
 ```
 
 3. When the webcam window opens:
@@ -126,7 +125,7 @@ npm run dev
 2. In a new terminal, launch the Streamlit interface:
 ```bash
 # Make sure you're in the project root directory
-streamlit run main_streamlit.py
+streamlit run src/main_streamlit.py
 ```
 
 3. Using the Streamlit interface:
@@ -138,13 +137,22 @@ streamlit run main_streamlit.py
 
 ## Project Structure
 
-- `main_v2.py`: Webcam-based application
-- `main_streamlit.py`: Streamlit-based application
-- `prompt_system.txt`: System prompt for Claude
-- `prompt_assistant.txt`: Assistant prompt for Claude
-- `requirements.txt`: Python dependencies
-- `nextjs-app-template/`: Template for generated web applications
-- `blank-nextjs-app/`: Working directory for generated applications
+```
+draw-an-app/
+├── src/                    # Source code directory
+│   ├── main_v2.py         # Webcam-based application
+│   ├── main_streamlit.py  # Streamlit-based application
+│   └── utils/             # Utility modules
+│       ├── aws_utils.py   # AWS-related utilities
+│       ├── camera_utils.py # Camera handling utilities
+│       ├── image_utils.py # Image processing utilities
+│       └── project_utils.py # Project-specific utilities
+│   ├── prompt_system.txt      # System prompt for Claude
+│   ├── prompt_assistant.txt   # Assistant prompt for Claude
+│   ├── requirements.txt       # Python dependencies
+├── nextjs-app-template/   # Template for generated web applications
+└── blank-nextjs-app/     # Working directory for generated applications
+```
 
 ## Troubleshooting
 
@@ -188,4 +196,3 @@ Before you begin using the solution, there are certain precautions you must take
 - Cost Management with Bedrock: Be mindful of the costs associated with AWS resources.
 
 - This is a sample: the code provided in this repository shouldn't be used for production workloads without further reviews and adaptation.
-
