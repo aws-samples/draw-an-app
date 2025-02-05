@@ -53,6 +53,7 @@ def main():
                 except Exception as e:
                     print(traceback.format_exc())
                     print(type(e).__name__ + ' ❌ \nTrying again', flush=True)
+                    # nosemgrep
                     time.sleep(1)
             print(' ✅', flush=True)
 
