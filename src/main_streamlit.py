@@ -38,7 +38,7 @@ def main():
                 # Call LLM
                 st.text("Generating app code...")
                 try:
-                    response, complete_response = invoke_model(
+                    response, complete_response, costs = invoke_model(
                         st.session_state.bedrock_runtime,
                         st.session_state.system_prompt,
                         st.session_state.chat_prompt,
@@ -47,6 +47,9 @@ def main():
                     
                     # Update project
                     st.text("Response received")
+                    st.text(f"Token Usage - Input: {costs['input_tokens']:,} | Output: {costs['output_tokens']:,}")
+                    st.text(f"Costs - Input: ${costs['input_cost']:.4f} | Output: ${costs['output_cost']:.4f} | Total: ${costs['total_cost']:.4f}")
+    
                     st.write(complete_response)
                     st.text("Updating project...")
                     update_project(response)

@@ -65,14 +65,38 @@ def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image, format="JPE
     )
 
     # Process the response
+    # Constants for token pricing
+    INPUT_TOKEN_PRICE = 0.003  # Cost per 1K input tokens
+    OUTPUT_TOKEN_PRICE = 0.015  # Cost per 1K output tokens
+    TOKENS_PER_UNIT = 1000
+
     response = json.loads(result['body'].read())
+    usage = response.get("usage", {})
+    input_tokens = usage.get("input_tokens", 0)
+    output_tokens = usage.get("output_tokens", 0)
+
+    # Calculate costs using constants
+    input_cost = (input_tokens / TOKENS_PER_UNIT) * INPUT_TOKEN_PRICE
+    output_cost = (output_tokens / TOKENS_PER_UNIT) * OUTPUT_TOKEN_PRICE
+    total_cost = input_cost + output_cost
+
+    # Log token usage and costs
+    print(f"Token Usage - Input: {input_tokens:,} | Output: {output_tokens:,}")
+    print(f"Costs - Input: ${input_cost:.4f} | Output: ${output_cost:.4f} | Total: ${total_cost:.4f}")
     response = response['content'][0]['text']
     complete_response = response
     print(response)
     response = re.search(r"<json>(.*?)</json>", response, re.DOTALL).group(1)
     response = json.loads(response)
 
-    return (response, complete_response)
+    return (response, complete_response, {
+        'input_tokens': input_tokens,
+        'output_tokens': output_tokens,
+        'input_cost': input_cost,
+        'output_cost': output_cost,
+        'total_cost': total_cost
+        
+    })
 
 def invoke_model_stream(bedrock_runtime, system_prompt, chat_prompt, image, format="JPEG"):
     """Invoke AWS Bedrock model with streaming response."""
