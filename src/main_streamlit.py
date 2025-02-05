@@ -33,12 +33,12 @@ def main():
                 # Process image
                 st.text("Processing image...")
                 processed_image = process_image(image)
-                st.image(processed_image, caption="Processed Image", use_column_width=True)
+                #st.image(processed_image, caption="Processed Image", use_column_width=True)
 
                 # Call LLM
                 st.text("Generating app code...")
                 try:
-                    response = invoke_model(
+                    response, complete_response = invoke_model(
                         st.session_state.bedrock_runtime,
                         st.session_state.system_prompt,
                         st.session_state.chat_prompt,
@@ -46,6 +46,8 @@ def main():
                     )
                     
                     # Update project
+                    st.text("Response received")
+                    st.write(complete_response)
                     st.text("Updating project...")
                     update_project(response)
                     

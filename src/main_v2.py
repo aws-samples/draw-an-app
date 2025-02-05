@@ -44,7 +44,7 @@ def main():
             while True:
                 try:
                     print('Calling multimodal LLM', end='', flush=True)
-                    response = invoke_model(bedrock_runtime, system_prompt, chat_prompt, image)
+                    response, complete_response = invoke_model(bedrock_runtime, system_prompt, chat_prompt, image)
                     break
                 except Exception as e:
                     print(traceback.format_exc())

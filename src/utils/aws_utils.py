@@ -8,6 +8,9 @@ import traceback
 
 logger = logging.getLogger(__name__)
 
+
+
+
 def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image, format="JPEG"):
     """Invoke AWS Bedrock model with image input."""
     # Create image file and base64 encode it
@@ -64,11 +67,12 @@ def invoke_model(bedrock_runtime, system_prompt, chat_prompt, image, format="JPE
     # Process the response
     response = json.loads(result['body'].read())
     response = response['content'][0]['text']
+    complete_response = response
     print(response)
     response = re.search(r"<json>(.*?)</json>", response, re.DOTALL).group(1)
     response = json.loads(response)
 
-    return response
+    return (response, complete_response)
 
 def invoke_model_stream(bedrock_runtime, system_prompt, chat_prompt, image, format="JPEG"):
     """Invoke AWS Bedrock model with streaming response."""
