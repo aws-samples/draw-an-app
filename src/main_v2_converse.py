@@ -9,6 +9,7 @@ from utils.camera_utils import (
 from utils.project_utils import initialize, reset_project, update_project
 from utils.image_utils import process_image, acquire_image
 from utils.aws_utils import invoke_model_stream
+import cv2
 
 logger = logging.getLogger(__name__)
 

@@ -1,6 +1,7 @@
 import time
 import traceback
 import os
+import cv2
 from utils.camera_utils import (
     initialize_camera, capture_frame, resize_image, 
     save_image, display_frame, release_camera
