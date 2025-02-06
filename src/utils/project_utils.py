@@ -2,11 +2,13 @@ import os
 import shutil
 from pathlib import Path
 
-
-
 path = Path(__file__).parent
 template_folder = './nextjs-app-template'
 demo_folder = './blank-nextjs-app'
+
+def clear_screen():
+    print("\033[H\033[J", end="")
+    
 
 def initialize():
     """Initialize Bedrock client and load prompts."""

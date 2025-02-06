@@ -6,10 +6,11 @@ from utils.camera_utils import (
     initialize_camera, capture_frame, resize_image, 
     save_image, display_frame, release_camera
 )
-from utils.project_utils import initialize, reset_project, update_project
+from utils.project_utils import initialize, reset_project, update_project, clear_screen
 from utils.image_utils import process_image, acquire_image
 from utils.aws_utils import invoke_model_stream
 import cv2
+
 
 logger = logging.getLogger(__name__)
 
@@ -26,14 +27,16 @@ def main():
         if key == ord(' '):
             resized_frame = resize_image(frame, 1120, 1120)
             save_image(resized_frame, 'captured_image.jpeg')
-            os.system('clear')
+            clear_screen()
+            #subprocess.run(['clear' if subprocess.os.name != 'nt' else 'cls'], shell=True)
         
             print('Resetting project', end='', flush=True)
             reset_project()
             print(' ✅', flush=True)
 
             print('Ready ✅', flush=True)
-            os.system('clear')
+            #subprocess.run(['clear' if subprocess.os.name != 'nt' else 'cls'], shell=True)
+            clear_screen()
             print('Resetting project ✅')
             print('Ready ✅', flush=True)
 
