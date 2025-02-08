@@ -6,11 +6,62 @@ This project uses AWS Bedrock's Claude 3 Sonnet model to convert hand-drawn UI s
 
 ## Prerequisites
 
+### Node.js Setup
+- Node.js 18.x or higher
+  
+#### Windows Installation
+1. Download the Node.js installer from [official website](https://nodejs.org/)
+2. Run the installer (.msi file)
+3. Follow the installation wizard
+4. Verify installation:
+```cmd
+node --version
+npm --version
+```
+
+#### macOS/Linux Installation
+Using package manager:
+```bash
+# For macOS (using Homebrew)
+brew install node
+
+# For Ubuntu/Debian
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# For other Linux distributions, check your package manager
+```
+
+### Python Setup
 - Python 3.8 or higher
 - Webcam (for webcam-based flow)
 - AWS Account with Bedrock access
 - Access to Claude 3 Sonnet model in AWS Bedrock
 - Git
+
+#### Windows Installation
+1. Download Python installer from [python.org](https://www.python.org/downloads/)
+2. Run the installer
+3. **Important**: Check "Add Python to PATH" during installation
+4. Verify installation:
+```cmd
+python --version
+pip --version
+```
+
+#### macOS/Linux Installation
+```bash
+# macOS (using Homebrew)
+brew install python
+
+# Ubuntu/Debian
+sudo apt-get update
+sudo apt-get install python3 python3-pip
+
+# Verify installation
+python3 --version
+pip3 --version
+```
 
 ## Architecture
 
@@ -50,24 +101,52 @@ cd draw-an-app
 ```
 
 2. Create and activate a virtual environment:
-```bash
-# On macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
 
-# On Windows
+Windows:
+```cmd
 python -m venv venv
 .\venv\Scripts\activate
 ```
 
-3. Install required packages:
+macOS/Linux:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+3. Install required Python packages:
+
+Windows:
+```cmd
+pip install -r src\requirements.txt
+```
+
+macOS/Linux:
 ```bash
 pip install -r src/requirements.txt
+```
+
+4. Install Node.js dependencies:
+
+Windows/macOS/Linux:
+```bash
+cd blank-nextjs-app
+npm install
+cd ..
 ```
 
 ## AWS Bedrock Configuration
 
 1. Configure AWS credentials:
+
+Windows (PowerShell):
+```powershell
+$env:AWS_ACCESS_KEY_ID="your_access_key"
+$env:AWS_SECRET_ACCESS_KEY="your_secret_key"
+$env:AWS_DEFAULT_REGION="us-west-2"  # or your preferred region
+```
+
+macOS/Linux:
 ```bash
 export AWS_ACCESS_KEY_ID=your_access_key
 export AWS_SECRET_ACCESS_KEY=your_secret_key
@@ -96,6 +175,8 @@ Before running the application, verify:
 ### Method 1: Webcam-based Flow
 
 1. Start the Next.js development server:
+
+Windows/macOS/Linux:
 ```bash
 cd blank-nextjs-app
 npm install
@@ -104,8 +185,16 @@ npm run dev
 Keep this server running to view your generated applications at http://localhost:3000
 
 2. In a new terminal, run the webcam-based application:
+
+Windows:
+```cmd
+# Make sure you're in the project root directory and venv is activated
+python src\main_v2.py
+```
+
+macOS/Linux:
 ```bash
-# Make sure you're in the project root directory
+# Make sure you're in the project root directory and venv is activated
 python src/main_v2.py
 ```
 
@@ -123,8 +212,16 @@ npm run dev
 ```
 
 2. In a new terminal, launch the Streamlit interface:
+
+Windows:
+```cmd
+# Make sure you're in the project root directory and venv is activated
+streamlit run src\main_streamlit.py
+```
+
+macOS/Linux:
 ```bash
-# Make sure you're in the project root directory
+# Make sure you're in the project root directory and venv is activated
 streamlit run src/main_streamlit.py
 ```
 
@@ -156,22 +253,27 @@ draw-an-app/
 
 ## Troubleshooting
 
-1. Webcam Issues (for webcam-based flow):
+1. Node.js Issues:
+   - Verify Node.js installation: `node --version`
+   - Clear npm cache: `npm cache clean --force`
+   - Delete node_modules and reinstall: `rm -rf node_modules && npm install`
+
+2. Webcam Issues (for webcam-based flow):
    - Ensure your webcam is properly connected
    - Check if other applications are using the webcam
    - Try different camera indices if multiple cameras are present
 
-2. AWS Bedrock Access:
+3. AWS Bedrock Access:
    - Verify AWS credentials are correctly set
    - Ensure you have access to the Claude 3 Sonnet model
    - Check AWS region configuration
 
-3. Python Environment:
+4. Python Environment:
    - Ensure virtual environment is activated
    - Verify all dependencies are installed correctly
    - Check Python version compatibility
 
-4. Streamlit Interface Issues:
+5. Streamlit Interface Issues:
    - Ensure Streamlit is installed correctly (`pip install streamlit`)
    - Check if the uploaded image is in a supported format
    - Verify the image file size is not too large
