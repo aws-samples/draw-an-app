@@ -53,5 +53,5 @@ def update_project(contents):
         os.makedirs(dir_path, exist_ok=True)
 
         # Write the file data.
-        with open(path, 'w') as file:
+        with open(path, 'w', encoding="utf-8") as file:
             file.write(contents[path])
