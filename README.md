@@ -280,7 +280,7 @@ draw-an-app/
 
 ## License
 
-This library is licensed under the MIT-0 License. See the LICENSE file.
+This code sample is licensed under the MIT-0 License. See the LICENSE file.
 
 - [Changelog](CHANGELOG.md) of the project.
 - [License](LICENSE) of the project.
