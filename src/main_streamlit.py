@@ -15,7 +15,7 @@ def main():
         st.session_state.bedrock_runtime, st.session_state.system_prompt, st.session_state.chat_prompt = initialize()
 
     # File uploader
-    uploaded_file = st.file_uploader("Choose an image file", type=['png', 'jpg', 'jpeg'])
+    uploaded_file = st.file_uploader("Choose an image file", type=['jpg', 'jpeg'])
 
     if uploaded_file is not None:
         # Display original image

@@ -226,7 +226,7 @@ streamlit run src/main_streamlit.py
 ```
 
 3. Using the Streamlit interface:
-   - Upload your UI sketch image (supported formats: PNG, JPG, JPEG)
+   - Upload your UI sketch image (supported formats: JPG, JPEG)
    - Click "Generate App" to process the image
    - The interface will show both original and processed images
    - Progress indicators will keep you informed of the generation process
