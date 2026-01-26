@@ -1,6 +1,6 @@
 boto3==1.35.74
 pillow==10.3.0
-python-multipart==0.0.18
+python-multipart==0.0.22
 python-dotenv==1.0.0
 opencv-python
 streamlit==1.37.0
